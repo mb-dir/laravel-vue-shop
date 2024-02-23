@@ -43,11 +43,11 @@ Route::middleware('auth')->group(function () {
 Route::group(['prefix'=>'admin', "middleware"=>"redirectAdmin"], function(){
     Route::get('/login', [AdminAuthController::class, 'index'])->name('admin.login.index');
     Route::post('/login', [AdminAuthController::class, 'authenticate'])->name('admin.authenticate');
-    Route::delete('/logout', [AdminAuthController::class, 'destroy'])->name('admin.logout');
 });
 
 Route::middleware(['auth', 'admin'])->prefix('admin')->group(function(){
     Route::get('/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
+    Route::post('/logout', [AdminAuthController::class, 'destroy'])->name('admin.logout');
 });
 
 require __DIR__.'/auth.php';

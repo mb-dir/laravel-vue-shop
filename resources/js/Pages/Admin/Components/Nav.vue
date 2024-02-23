@@ -1,3 +1,7 @@
+<script setup>
+import { Link } from "@inertiajs/vue3";
+</script>
+
 <template>
     <nav
         class="bg-white border-b border-gray-200 px-4 py-2.5 dark:bg-gray-800 dark:border-gray-700 fixed left-0 right-0 top-0 z-50"
@@ -602,8 +606,10 @@
                                 Billing
                             </div>
                         </a>
-                        <a
-                            href="#"
+                        <Link
+                            :href="route('admin.logout')"
+                            method="post"
+                            as="button"
                             class="block p-4 text-center rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 group"
                         >
                             <svg
@@ -624,7 +630,7 @@
                             <div class="text-sm text-gray-900 dark:text-white">
                                 Logout
                             </div>
-                        </a>
+                        </Link>
                     </div>
                 </div>
                 <button
