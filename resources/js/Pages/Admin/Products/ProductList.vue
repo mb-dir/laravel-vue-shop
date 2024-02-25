@@ -271,10 +271,10 @@ console.log(props);
                                     {{ product.title }}&#34;
                                 </th>
                                 <td class="px-4 py-3">
-                                    {{ product.category_id }}
+                                    {{ product.category.name }}
                                 </td>
                                 <td class="px-4 py-3">
-                                    {{ product.brand_id }}
+                                    {{ product.brand.name }}
                                 </td>
                                 <td class="px-4 py-3">
                                     {{ product.quantity }}
