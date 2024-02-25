@@ -261,7 +261,7 @@ console.log(props);
                         </thead>
                         <tbody>
                             <tr
-                                v-for="product in products"
+                                v-for="(product, index) in products"
                                 class="border-b dark:border-gray-700"
                             >
                                 <th
@@ -312,8 +312,14 @@ console.log(props);
                                     class="px-4 py-3 flex items-center justify-end"
                                 >
                                     <button
-                                        id="apple-imac-27-dropdown-button"
-                                        data-dropdown-toggle="apple-imac-27-dropdown"
+                                        :id="
+                                            'apple-imac-' +
+                                            index +
+                                            '-dropdown-button'
+                                        "
+                                        :data-dropdown-toggle="
+                                            'apple-imac-' + index + '-dropdown'
+                                        "
                                         class="inline-flex items-center p-0.5 text-sm font-medium text-center text-gray-500 hover:text-gray-800 rounded-lg focus:outline-none dark:text-gray-400 dark:hover:text-gray-100"
                                         type="button"
                                     >
@@ -330,12 +336,13 @@ console.log(props);
                                         </svg>
                                     </button>
                                     <div
-                                        id="apple-imac-27-dropdown"
+                                        :id="
+                                            'apple-imac-' + index + '-dropdown'
+                                        "
                                         class="hidden z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600"
                                     >
                                         <ul
                                             class="py-1 text-sm text-gray-700 dark:text-gray-200"
-                                            aria-labelledby="apple-imac-27-dropdown-button"
                                         >
                                             <li>
                                                 <a
