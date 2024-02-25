@@ -3,12 +3,14 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Models\Product;
 use Inertia\Inertia;
 
 class AdminController extends Controller
 {
     public function index(){
-        return Inertia::render("Admin/Dashboard");
+        $products = Product::all();
+
+        return Inertia::render("Admin/Dashboard", compact('products'));
     }
 }

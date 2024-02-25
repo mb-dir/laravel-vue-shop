@@ -42,8 +42,8 @@ import { Link } from "@inertiajs/vue3";
                     </svg>
                     <span class="sr-only">Toggle sidebar</span>
                 </button>
-                <a
-                    href="https://flowbite.com"
+                <Link
+                    :href="route('admin.dashboard')"
                     class="flex items-center justify-between mr-4"
                 >
                     <img
@@ -53,9 +53,9 @@ import { Link } from "@inertiajs/vue3";
                     />
                     <span
                         class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white"
-                        >Flowbite</span
+                        >Vshop</span
                     >
-                </a>
+                </Link>
                 <form action="#" method="GET" class="hidden md:block md:pl-2">
                     <label for="topbar-search" class="sr-only">Search</label>
                     <div class="relative md:w-64 md:w-96">

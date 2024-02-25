@@ -8,6 +8,12 @@ import Main from "./Components/Main.vue";
 onMounted(() => {
     initFlowbite();
 });
+
+const props = defineProps({
+    products: { type: Object, required: true },
+});
+
+console.log(props.products);
 </script>
 
 <template>
