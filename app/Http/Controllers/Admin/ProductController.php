@@ -13,4 +13,9 @@ class ProductController extends Controller
         $products = Product::with('category', 'brand')->get();
         return Inertia::render("Admin/Products/Index", compact('products'));
     }
+
+    public function destroy(Product $product){
+        $product->delete();
+        return redirect()->route('admin.product.index');
+    }
 }

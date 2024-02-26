@@ -1,9 +1,12 @@
 <script setup>
+import { router } from "@inertiajs/vue3";
 const props = defineProps({
     products: { type: Object, required: true },
 });
 
-console.log(props);
+const destroyProduct = (product) => {
+    router.delete(route("admin.product.destroy", product));
+};
 </script>
 <template>
     <section class="bg-gray-50 dark:bg-gray-900 p-3 sm:p-5">
@@ -360,11 +363,12 @@ console.log(props);
                                             </li>
                                         </ul>
                                         <div class="py-1">
-                                            <a
-                                                href="#"
+                                            <button
+                                                @click="destroyProduct(product)"
                                                 class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
-                                                >Delete</a
                                             >
+                                                Delete
+                                            </button>
                                         </div>
                                     </div>
                                 </td>

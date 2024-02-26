@@ -49,6 +49,7 @@ Route::group(['prefix'=>'admin', "middleware"=>"redirectAdmin"], function(){
 Route::middleware(['auth', 'admin'])->prefix('admin')->group(function(){
     Route::get('/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
     Route::get('/product', [ProductController::class, 'index'])->name('admin.product.index');
+    Route::delete('/product/{product}', [ProductController::class, 'destroy'])->name('admin.product.destroy');
     Route::post('/logout', [AdminAuthController::class, 'destroy'])->name('admin.logout');
 });
 
