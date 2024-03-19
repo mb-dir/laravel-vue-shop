@@ -1,5 +1,6 @@
 <script setup>
 import { router } from "@inertiajs/vue3";
+import { ref } from "vue";
 const props = defineProps({
     products: { type: Object, required: true },
 });
@@ -7,9 +8,43 @@ const props = defineProps({
 const destroyProduct = (product) => {
     router.delete(route("admin.product.destroy", product));
 };
+
+const isAddModalOpen = ref(false);
+const dialogVisible = ref(false);
+
+const openAddModal = () => {
+    isAddModalOpen.value = true;
+    dialogVisible.value = true;
+};
+
+const handleClose = (done) => {
+    ElMessageBox.confirm("Are you sure to close this dialog?")
+        .then(() => {
+            done();
+        })
+        .catch(() => {
+            // catch error
+        });
+};
 </script>
 <template>
     <section class="bg-gray-50 dark:bg-gray-900 p-3 sm:p-5">
+        <el-dialog
+            v-model="dialogVisible"
+            title="Tips"
+            width="500"
+            :before-close="handleClose"
+        >
+            <span>This is a message</span>
+            <template #footer>
+                <div class="dialog-footer">
+                    <el-button @click="dialogVisible = false">Cancel</el-button>
+                    <el-button type="primary" @click="dialogVisible = false">
+                        Confirm
+                    </el-button>
+                </div>
+            </template>
+        </el-dialog>
         <div class="mx-auto max-w-screen-xl px-4 lg:px-12">
             <!-- Start coding here -->
             <div
@@ -57,6 +92,7 @@ const destroyProduct = (product) => {
                         <button
                             type="button"
                             class="flex items-center justify-center text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+                            @click="openAddModal"
                         >
                             <svg
                                 class="h-3.5 w-3.5 mr-2"
