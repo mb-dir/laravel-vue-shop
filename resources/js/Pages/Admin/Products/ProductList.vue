@@ -1,8 +1,10 @@
 <script setup>
-import { router } from "@inertiajs/vue3";
+import { router, useForm } from "@inertiajs/vue3";
 import { ref } from "vue";
 const props = defineProps({
     products: { type: Object, required: true },
+    brands: { type: Object, required: true },
+    categories: { type: Object, required: true },
 });
 
 const destroyProduct = (product) => {
@@ -17,25 +19,130 @@ const openAddModal = () => {
     dialogVisible.value = true;
 };
 
-const handleClose = (done) => {
-    ElMessageBox.confirm("Are you sure to close this dialog?")
-        .then(() => {
-            done();
-        })
-        .catch(() => {
-            // catch error
-        });
+const form = useForm({
+    title: null,
+    price: null,
+    quantity: null,
+    description: null,
+    category_id: 1,
+    brand_id: 1,
+});
+
+const stroeProduct = () => {
+    form.post(route("admin.product.store"), {
+        onFinish: () => {
+            isAddModalOpen.value = false;
+            dialogVisible.value = false;
+        },
+        preserveState: false,
+    });
 };
 </script>
 <template>
     <section class="bg-gray-50 dark:bg-gray-900 p-3 sm:p-5">
-        <el-dialog
-            v-model="dialogVisible"
-            title="Tips"
-            width="500"
-            :before-close="handleClose"
-        >
-            <span>This is a message</span>
+        <el-dialog v-model="dialogVisible" title="Tips" width="500">
+            <form class="max-w-md mx-auto" @submit.prevent="stroeProduct">
+                <div class="relative z-0 w-full mb-5 group">
+                    <input
+                        name="title"
+                        id="floating_title"
+                        class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                        placeholder=""
+                        required
+                        v-model="form.title"
+                    />
+                    <label
+                        for="floating_title"
+                        class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                        >Product title</label
+                    >
+                </div>
+                <div class="relative z-0 w-full mb-5 group">
+                    <input
+                        type="number"
+                        name="price"
+                        id="floating_price"
+                        class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                        placeholder=" "
+                        required
+                        v-model="form.price"
+                    />
+                    <label
+                        for="floating_price"
+                        class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                        >Price</label
+                    >
+                </div>
+                <div class="relative z-0 w-full mb-5 group">
+                    <input
+                        type="number"
+                        name="quantity"
+                        id="floating_quantity"
+                        class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                        placeholder=" "
+                        required
+                        v-model="form.quantity"
+                    />
+                    <label
+                        for="floating_quantity"
+                        class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                        >Quantity</label
+                    >
+                </div>
+                <div class="grid md:grid-cols-2 md:gap-6">
+                    <div class="relative z-0 w-full mb-5 group">
+                        <select
+                            name=""
+                            id="floating_last_name"
+                            v-model="form.brand_id"
+                            class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                        >
+                            <option v-for="brand in brands" :value="brand.id">
+                                {{ brand.name }}
+                            </option>
+                        </select>
+                    </div>
+
+                    <div class="relative z-0 w-full mb-5 group">
+                        <select
+                            name=""
+                            id="floating_last_name"
+                            v-model="form.category_id"
+                            class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                        >
+                            <option
+                                v-for="category in categories"
+                                :value="category.id"
+                            >
+                                {{ category.name }}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="relative z-0 w-full mb-5 group">
+                    <textarea
+                        name="description"
+                        id="floating_description"
+                        class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                        placeholder=" "
+                        required
+                        v-model="form.description"
+                    ></textarea>
+                    <label
+                        for="floating_description"
+                        class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                        >Description</label
+                    >
+                </div>
+                <button
+                    type="submit"
+                    class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                >
+                    Submit
+                </button>
+            </form>
+
             <template #footer>
                 <div class="dialog-footer">
                     <el-button @click="dialogVisible = false">Cancel</el-button>

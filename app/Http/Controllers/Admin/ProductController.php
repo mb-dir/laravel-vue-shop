@@ -3,9 +3,12 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Brand;
+use App\Models\Category;
 use App\Models\Product;
 use App\Models\ProductImage;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 use Illuminate\Support\Str;
 
@@ -13,12 +16,14 @@ class ProductController extends Controller
 {
     public function index(){
         $products = Product::with('category', 'brand')->get();
-        return Inertia::render("Admin/Products/Index", compact('products'));
+        $brands = Brand::all();
+        $categories = Category::all();
+        return Inertia::render("Admin/Products/Index", compact('products', 'brands', 'categories'));
     }
 
     public function destroy(Product $product){
         $product->delete();
-        return redirect()->route('admin.product.index');
+        return Redirect::route('admin.product.index');
     }
 
     public function store(Request $request){
@@ -46,6 +51,6 @@ class ProductController extends Controller
             }
         }
 
-        return redirect()->route('admin.product.index');
+        return Redirect::route('admin.product.index');
     }
 }
