@@ -12,11 +12,19 @@ const destroyProduct = (product) => {
 };
 
 const isAddModalOpen = ref(false);
+const isEditMode = ref(false);
 const dialogVisible = ref(false);
 
 const openAddModal = () => {
     isAddModalOpen.value = true;
     dialogVisible.value = true;
+    isEditMode.value = false;
+};
+
+const openEditModal = () => {
+    isAddModalOpen.value = false;
+    dialogVisible.value = true;
+    isEditMode.value = true;
 };
 
 const form = useForm({
@@ -41,7 +49,11 @@ const stroeProduct = () => {
 </script>
 <template>
     <section class="bg-gray-50 dark:bg-gray-900 p-3 sm:p-5">
-        <el-dialog v-model="dialogVisible" title="Tips" width="500">
+        <el-dialog
+            v-model="dialogVisible"
+            :title="`${isEditMode ? 'Edit' : 'Add'} product`"
+            width="500"
+        >
             <form class="max-w-md mx-auto" @submit.prevent="stroeProduct">
                 <div class="relative z-0 w-full mb-5 group">
                     <input
@@ -515,7 +527,7 @@ const stroeProduct = () => {
                                                     >Show</a
                                                 >
                                             </li>
-                                            <li>
+                                            <li @click="openEditModal(product)">
                                                 <a
                                                     href="#"
                                                     class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
