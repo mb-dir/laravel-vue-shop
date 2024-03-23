@@ -7,6 +7,8 @@ import { resolvePageComponent } from "laravel-vite-plugin/inertia-helpers";
 import { ZiggyVue } from "../../vendor/tightenco/ziggy/dist/vue.m";
 import ElementPlus from "element-plus";
 import "element-plus/dist/index.css";
+import Vue3Toastify from "vue3-toastify";
+import "vue3-toastify/dist/index.css";
 
 const appName = import.meta.env.VITE_APP_NAME || "Laravel";
 
@@ -22,6 +24,9 @@ createInertiaApp({
             .use(plugin)
             .use(ZiggyVue)
             .use(ElementPlus)
+            .use(Vue3Toastify, {
+                autoClose: 3000,
+            })
             .mount(el);
     },
     progress: {

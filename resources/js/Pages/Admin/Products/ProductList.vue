@@ -1,6 +1,7 @@
 <script setup>
 import { router, useForm } from "@inertiajs/vue3";
 import { ref } from "vue";
+import { toast } from "vue3-toastify";
 const props = defineProps({
     products: { type: Object, required: true },
     brands: { type: Object, required: true },
@@ -8,7 +9,11 @@ const props = defineProps({
 });
 
 const destroyProduct = (product) => {
-    router.delete(route("admin.product.destroy", product));
+    router.delete(route("admin.product.destroy", product), {
+        onSuccess: () => {
+            toast.success("Success");
+        },
+    });
 };
 
 const isAddModalOpen = ref(false);
@@ -42,6 +47,9 @@ const stroeProduct = () => {
         onFinish: () => {
             isAddModalOpen.value = false;
             dialogVisible.value = false;
+        },
+        onSuccess: () => {
+            toast.success("Success");
         },
         preserveState: false,
     });
