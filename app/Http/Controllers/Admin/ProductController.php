@@ -41,6 +41,7 @@ class ProductController extends Controller
             foreach ($productImages as $img){
                 // Generate a unique name for the image using timestamp and random string
                 $uniqueName = time() . '-' . Str::random(10) . '.' . $img->getClientOriginalExtension();
+                dd($uniqueName);
                 // Store the image in the public folder with the unique name
                 $img->move('product_images', $uniqueName);
 

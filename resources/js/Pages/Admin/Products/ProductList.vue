@@ -39,11 +39,12 @@ const form = useForm({
     description: null,
     category_id: 1,
     brand_id: 1,
-    product_images: null,
+    product_images: [],
 });
 
 const stroeProduct = () => {
     form.post(route("admin.product.store"), {
+        _method: "put",
         onFinish: () => {
             isAddModalOpen.value = false;
             dialogVisible.value = false;
@@ -62,7 +63,11 @@ const stroeProduct = () => {
             :title="`${isEditMode ? 'Edit' : 'Add'} product`"
             width="500"
         >
-            <form class="max-w-md mx-auto" @submit.prevent="stroeProduct">
+            <form
+                class="max-w-md mx-auto"
+                @submit.prevent="stroeProduct"
+                enctype="multipart/form-data"
+            >
                 <div class="relative z-0 w-full mb-5 group">
                     <input
                         name="title"
@@ -166,6 +171,7 @@ const stroeProduct = () => {
                         class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                         placeholder=" "
                         required
+                        multiple
                     />
                     <label
                         for="floating_description"
