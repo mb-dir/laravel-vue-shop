@@ -39,12 +39,12 @@ const form = useForm({
     description: null,
     category_id: 1,
     brand_id: 1,
-    product_images: [],
+    product_images: null,
+    _method: "PUT",
 });
 
 const stroeProduct = () => {
     form.post(route("admin.product.store"), {
-        _method: "put",
         onFinish: () => {
             isAddModalOpen.value = false;
             dialogVisible.value = false;

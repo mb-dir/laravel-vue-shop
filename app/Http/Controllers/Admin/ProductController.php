@@ -36,20 +36,19 @@ class ProductController extends Controller
         $product->brand_id = $request->brand_id;
         $product->save();
 
-        if($request->hasFile('product_images')){
-            $productImages = $request->file('product_images');
-            foreach ($productImages as $img){
-                // Generate a unique name for the image using timestamp and random string
-                $uniqueName = time() . '-' . Str::random(10) . '.' . $img->getClientOriginalExtension();
-                dd($uniqueName);
-                // Store the image in the public folder with the unique name
-                $img->move('product_images', $uniqueName);
+        if ($request->hasFile('product_images')) {
+            $productImage = $request->file('product_images');
+            
+            // Generate a unique name for the image using timestamp and random string
+            $uniqueName = time() . '-' . Str::random(10) . '.' . $productImage->getClientOriginalExtension();
+            
+            // Store the image in the public folder with the unique name
+            $productImage->move('product_images', $uniqueName);
 
-                ProductImage::create([
-                    'product_id' => $product->id,
-                    'image' => 'product_images/' . $uniqueName,
-                ]);
-            }
+            ProductImage::create([
+                'product_id' => $product->id,
+                'image' => 'product_images/' . $uniqueName,
+            ]);
         }
 
         return Redirect::route('admin.product.index');

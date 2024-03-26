@@ -50,7 +50,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function(){
     Route::get('/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
     Route::get('/product', [ProductController::class, 'index'])->name('admin.product.index');
     Route::delete('/product/{product}', [ProductController::class, 'destroy'])->name('admin.product.destroy');
-    Route::post('/product', [ProductController::class, 'store'])->name('admin.product.store');
+    Route::put('/product', [ProductController::class, 'store'])->name('admin.product.store');
     Route::post('/logout', [AdminAuthController::class, 'destroy'])->name('admin.logout');
 });
 
