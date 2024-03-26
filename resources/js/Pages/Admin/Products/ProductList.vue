@@ -186,15 +186,6 @@ const stroeProduct = () => {
                     Submit
                 </button>
             </form>
-
-            <template #footer>
-                <div class="dialog-footer">
-                    <el-button @click="dialogVisible = false">Cancel</el-button>
-                    <el-button type="primary" @click="dialogVisible = false">
-                        Confirm
-                    </el-button>
-                </div>
-            </template>
         </el-dialog>
         <div class="mx-auto max-w-screen-xl px-4 lg:px-12">
             <!-- Start coding here -->
