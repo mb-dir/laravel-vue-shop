@@ -24,12 +24,26 @@ const openAddModal = () => {
     isAddModalOpen.value = true;
     dialogVisible.value = true;
     isEditMode.value = false;
+
+    form.title = null;
+    form.price = null;
+    form.quantity = null;
+    form.description = null;
+    form.category_id = 1;
+    form.brand_id = 1;
 };
 
-const openEditModal = () => {
+const openEditModal = (product) => {
     isAddModalOpen.value = false;
     dialogVisible.value = true;
     isEditMode.value = true;
+
+    form.title = product.title;
+    form.price = product.price;
+    form.quantity = product.quantity;
+    form.description = product.description;
+    form.category_id = product.category_id;
+    form.brand_id = product.brand_id;
 };
 
 const form = useForm({
